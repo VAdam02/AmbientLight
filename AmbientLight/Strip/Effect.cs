@@ -10,7 +10,7 @@ namespace AmbientLight.Strip
 	{
 		Effect()
 		{
-			_="asd";
+			
 		}
 	}
 }
