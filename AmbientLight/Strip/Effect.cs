@@ -8,5 +8,9 @@ namespace AmbientLight.Strip
 {
 	class Effect
 	{
+		Effect()
+		{
+
+		}
 	}
 }
