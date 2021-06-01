@@ -6,6 +6,7 @@ using AmbientLight.Commands;
 using AmbientLight.Power;
 using AmbientLight.Strip;
 using System.Threading;
+using AmbientLight.Strip.Effects_;
 
 namespace AmbientLight
 {
@@ -51,14 +52,17 @@ namespace AmbientLight
 			});
 			*/
 
-			VirtualStrip monitor = new VirtualStrip(new StripPart[]
+			VirtualStrip monitor = new VirtualStrip(logger, Effects.Rainbow, 10, new ColorManager(), new StripPart[]
 			{
 				new StripPart(3, 0, 18, Voltage.V12, LEDType.WS2811),
 				new StripPart(3, 19, 19, Voltage.V12, LEDType.WS2811),
 				new StripPart(3, 20, 37, Voltage.V12, LEDType.WS2811)
 			});
-
+			Thread.Sleep(5000);
+			logger.Log("----------------------------------------");
+			monitor.effect.On();
 			
+			/*
 			Thread.Sleep(5000);
 			for (int k = 0; k < 25; k++)
 			{
@@ -82,6 +86,7 @@ namespace AmbientLight
 				
 				Thread.Sleep(1000);
 			}
+			*/
 
 			//TODO do the things
 

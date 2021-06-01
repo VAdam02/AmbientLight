@@ -64,7 +64,6 @@ namespace AmbientLight.Strip.LEDs
 
 	class BrightnessChangeEventHandler
 	{
-		public BrightnessChangeEventHandler() { }
 		public void Setup(byte pin)
 		{
 			BrightnessChangeEvent.AddHandler(this, pin);

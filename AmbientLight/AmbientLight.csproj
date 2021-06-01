@@ -57,7 +57,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ArduinoFolder\Arduino.cs" />
     <Compile Include="Strip\Color.cs" />
+    <Compile Include="Strip\ColorManager.cs" />
     <Compile Include="Strip\Effect.cs" />
+    <Compile Include="Strip\Effects_\Rainbow.cs" />
     <Compile Include="Strip\LEDs\BrightnessChangeEvent.cs" />
     <Compile Include="Strip\LEDs\LED.cs" />
     <Compile Include="Strip\StripPart.cs" />

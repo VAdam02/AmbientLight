@@ -35,12 +35,15 @@ namespace AmbientLight.Commands.Home_.State_
 
 		private static void All(Logger logger)
 		{
-			//TODO Effects.EffectManager.effectManager.On();
+			for (int i = 0; i < VirtualStrip.strips.Count; i++)
+			{
+				VirtualStrip.strips[i].effect.On();
+			}
 			logger.Log("All configured effects are started");
 		}
 		private static void One(Logger logger, int ID)
 		{
-			//TODO Effects.EffectManager.effectManager.On();
+			VirtualStrip.strips[ID].effect.Pause();
 			logger.Log("All configured effects are started");
 		}
 

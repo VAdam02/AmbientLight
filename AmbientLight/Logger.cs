@@ -33,6 +33,11 @@ namespace AmbientLight
 			return Console.ReadLine();
 		}
 
+		internal void AddLevel(object p)
+		{
+			throw new NotImplementedException();
+		}
+
 		public void Debug(DebugCategory category, string message)
 		{
 			Console.ForegroundColor = ConsoleColor.DarkCyan;

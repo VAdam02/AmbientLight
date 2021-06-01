@@ -33,6 +33,11 @@ namespace AmbientLight.Strip
 			strips.Add(this);
 		}
 
+		public LED[] GetLEDs()
+		{
+			return LED.GetLEDArray(pin, from, to);
+		}
+
 		public void GetData(out byte pin, out byte from, out byte to, out Voltage voltage, out LEDType type)
 		{
 			pin = this.pin;

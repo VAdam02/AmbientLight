@@ -106,7 +106,7 @@ namespace AmbientLight
 						else
 						{
 							//TODO debug...
-							logger.Debug(DebugCategory.Spammer, "Original:\t" + data[0] + "\t" + data[1] + "\t" + data[2] + "\t" + data[3] + "\t" + data[4]);
+							//logger.Debug(DebugCategory.Spammer, "Original:\t" + data[0] + "\t" + data[1] + "\t" + data[2] + "\t" + data[3] + "\t" + data[4]);
 
 							LED.leds[BrigthnessID_Alt][data[0]].GetRGB(out byte[] cache);
 
