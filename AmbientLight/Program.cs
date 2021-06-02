@@ -58,8 +58,8 @@ namespace AmbientLight
 
 			VirtualStrip monitor = new VirtualStrip(logger, Effects.TesterEffect, 10, monitorForeColor, monitorBackColor, new StripPart[]
 			{
-				new StripPart(3, 0, 18, Voltage.V12, LEDType.WS2811),
-				new StripPart(3, 19, 19, Voltage.V12, LEDType.WS2811),
+				new StripPart(3, 0, 4, Voltage.V12, LEDType.WS2811),
+				new StripPart(3, 5, 19, Voltage.V12, LEDType.WS2811),
 				new StripPart(3, 20, 37, Voltage.V12, LEDType.WS2811)
 			});
 			Thread.Sleep(5000);

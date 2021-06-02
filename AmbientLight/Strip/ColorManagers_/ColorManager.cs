@@ -70,6 +70,7 @@ namespace AmbientLight.Strip
 		{
 			if (cloning)
 			{
+				clone.Update();
 				deltatime = clone.deltatime + cloneDifference;
 			}
 			else

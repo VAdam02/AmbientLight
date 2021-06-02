@@ -25,7 +25,8 @@ namespace AmbientLight.Strip.Effects_
 
 		protected override void Loop(int deltatime)
 		{
-			Color forecolor = foreColorManager.GetColor();
+			//Color forecolor = foreColorManager.GetColor();
+			Color forecolor = new Color() { r = 255, g = 255, b = 255 };
 			int j = 0;
 			while (j < 10)
 			{
