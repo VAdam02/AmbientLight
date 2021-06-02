@@ -14,8 +14,6 @@ namespace AmbientLight.Strip
 		public List<StripPart> parts = new List<StripPart>();
 		public Effect effect;
 
-		private int maxFPS = 10;
-
 		private Logger logger;
 
 		public VirtualStrip(Logger logger, Effects effect, int maxFPS, ColorManager forecolorManager, ColorManager backcolorManager, StripPart[] stripParts)

@@ -52,7 +52,11 @@ namespace AmbientLight
 			});
 			*/
 
-			VirtualStrip monitor = new VirtualStrip(logger, Effects.TesterEffect, 10, new ColorManager(), new ColorManager(), new StripPart[]
+			ColorManager monitorForeColor = ColorManager.GetColorManagerByID(ColorManagers.TesterColorManager);
+			ColorManager monitorBackColor = ColorManager.GetColorManagerByID(ColorManagers.TesterColorManager);
+			monitorBackColor.CloneDeltaTime(monitorForeColor, 10000);
+
+			VirtualStrip monitor = new VirtualStrip(logger, Effects.TesterEffect, 10, monitorForeColor, monitorBackColor, new StripPart[]
 			{
 				new StripPart(3, 0, 18, Voltage.V12, LEDType.WS2811),
 				new StripPart(3, 19, 19, Voltage.V12, LEDType.WS2811),

@@ -1,11 +1,7 @@
 ﻿using AmbientLight.Strip.Effects_;
 using AmbientLight.Strip.LEDs;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace AmbientLight.Strip
 {
@@ -16,7 +12,8 @@ namespace AmbientLight.Strip
 
 	class Effect
 	{
-		protected ColorManager colorManager;
+		protected ColorManager foreColorManager;
+		protected ColorManager backColorManager;
 		protected VirtualStrip strip;
 		
 		private int maxFPS = 1;
@@ -34,12 +31,13 @@ namespace AmbientLight.Strip
 			return new Effect();
 		}
 
-		protected void Setup(Logger logger, VirtualStrip strip, int maxFPS, ColorManager colorManager)
+		protected void Setup(Logger logger, VirtualStrip strip, int maxFPS, ColorManager foreColorManager, ColorManager backColorManager)
 		{
 			this.logger = logger;
 			logger.Debug(DebugCategory.Rare, "Effect setuped");
 
-			this.colorManager = colorManager;
+			this.foreColorManager = foreColorManager;
+			this.backColorManager = backColorManager;
 			this.strip = strip;
 			this.maxFPS = maxFPS;
 			minDeltaTime = 1000 / this.maxFPS;
@@ -53,7 +51,8 @@ namespace AmbientLight.Strip
 		{
 			logger.Debug(DebugCategory.Rare, "Effect started");
 			Start();
-			colorManager.On();
+			foreColorManager.On();
+			backColorManager.On();
 		}
 
 		public void Pause()
@@ -62,7 +61,8 @@ namespace AmbientLight.Strip
 			running = false;
 			paused = true;
 			try { t.Join(); } catch { }
-			colorManager.Pause();
+			foreColorManager.Pause();
+			backColorManager.Pause();
 		}
 
 		public void Off()
@@ -72,8 +72,9 @@ namespace AmbientLight.Strip
 
 			logger.Debug(DebugCategory.Rare, "Effect stopped");
 
-			colorManager.Off();
-			
+			foreColorManager.Off();
+			backColorManager.Off();
+
 			Thread.Sleep(2 * minDeltaTime);
 
 			for (int i = 0; i < strip.parts.Count; i++)
