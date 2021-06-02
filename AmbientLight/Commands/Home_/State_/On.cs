@@ -1,4 +1,5 @@
 ﻿using AmbientLight.Strip;
+using System;
 
 namespace AmbientLight.Commands.Home_.State_
 {
@@ -35,12 +36,19 @@ namespace AmbientLight.Commands.Home_.State_
 					data = logger.ReadLine("").ToLower().Split(' ');
 				}
 
-				if (data[0] == "exit") { running = false; }
-				else if (data[0] == "help") { Help(logger); }
-				else if (data[0] == "all") { All(logger); }
-				else if (1 <= int.Parse(data[0]) && int.Parse(data[0]) <= VirtualStrip.strips.Count) { One(logger, int.Parse(data[0]) - 1); }
+				try
+				{
+					if (data[0] == "exit") { running = false; }
+					else if (data[0] == "help") { Help(logger); }
+					else if (data[0] == "all") { All(logger); }
+					else if (1 <= int.Parse(data[0]) && int.Parse(data[0]) <= VirtualStrip.strips.Count) { One(logger, int.Parse(data[0]) - 1); }
 
-				else { logger.Log("Use HELP for the commands"); }
+					else { logger.Log("Use HELP for the commands"); }
+				}
+				catch (FormatException)
+				{
+					logger.Log("Use HELP for the commands");
+				}
 			}
 		}
 
