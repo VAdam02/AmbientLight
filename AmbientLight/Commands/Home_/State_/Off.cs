@@ -41,7 +41,7 @@ namespace AmbientLight.Commands.Home_.State_
 					if (data[0] == "exit") { running = false; }
 					else if (data[0] == "help") { Help(logger); }
 					else if (data[0] == "all") { All(logger); }
-					else if (1 <= int.Parse(data[0]) && int.Parse(data[0]) <= VirtualStrip.strips.Count) { One(logger, int.Parse(data[0]) - 1); }
+					else if (0 <= int.Parse(data[0]) && int.Parse(data[0]) < VirtualStrip.strips.Count) { One(logger, int.Parse(data[0])); }
 
 					else { logger.Log("Use HELP for the commands"); }
 				}
@@ -72,7 +72,7 @@ namespace AmbientLight.Commands.Home_.State_
 			logger.Log("Exit \t" + "Leave the current level");
 			logger.Log("Help \t" + "Write out the commands");
 			logger.Log("All \t" + "Stop all the configured effects");
-			logger.Log("1-" + VirtualStrip.strips.Count + " \t" + "Stop the selected strip");
+			logger.Log("0-" + (VirtualStrip.strips.Count-1) + " \t" + "Stop the selected strip");
 			logger.Log("-------------------------HELP-------------------------");
 		}
 	}
