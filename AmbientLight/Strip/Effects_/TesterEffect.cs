@@ -25,18 +25,19 @@ namespace AmbientLight.Strip.Effects_
 
 		protected override void Loop(int deltatime)
 		{
-			//Color forecolor = foreColorManager.GetColor();
-			Color forecolor = new Color() { r = 255, g = 255, b = 255 };
+			strip.parts[0].GetLEDs()[0].GetData(out byte[] data);
+			Color forecolor = foreColorManager.GetColor();
+			//Color forecolor = new Color() { r = 255, g = 255, b = 255 };
 			int j = 0;
 			while (j < 10)
 			{
-				LED.leds[3][j].SetRGB(forecolor.r, forecolor.g, forecolor.b);
+				LED.leds[data[0]][j].SetRGB(forecolor.r, forecolor.g, forecolor.b);
 				j++;
 			}
 			Color backcolor = backColorManager.GetColor();
-			while (j < 37)
+			while (j < 20)
 			{
-				LED.leds[3][j].SetRGB(backcolor.r, backcolor.g, backcolor.b);
+				LED.leds[data[0]][j].SetRGB(backcolor.r, backcolor.g, backcolor.b);
 				j++;
 			}
 

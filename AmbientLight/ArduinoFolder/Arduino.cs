@@ -91,19 +91,19 @@ namespace AmbientLight
 				{
 					if (arduino.queue.Count > 0)
 					{
-						changed = arduino.queue[0].GetRGB(out byte[] data);
+						changed = arduino.queue[0].GetData(out byte[] data);
 						if (changed)
 						{
 							if (data[0] == FlushID_Alt)
 							{
 								//TODO debug...
-								logger.Debug(DebugCategory.Spammer, "Flush:\t" + data[0] + "\t" + data[1] + "\t" + data[2] + "\t" + data[3] + "\t" + data[4]);
+								//logger.Debug(DebugCategory.Spammer, "Flush:\t" + data[0] + "\t" + data[1] + "\t" + data[2] + "\t" + data[3] + "\t" + data[4]);
 								data[0] = FlushID;
 							}
 							else if (data[0] == BrigthnessID_Alt)
 							{
 								//TODO debug...
-								logger.Debug(DebugCategory.Spammer, "Brightness:\t" + data[0] + "\t" + data[1] + "\t" + data[2] + "\t" + data[3] + "\t" + data[4]);
+								//logger.Debug(DebugCategory.Spammer, "Brightness:\t" + data[0] + "\t" + data[1] + "\t" + data[2] + "\t" + data[3] + "\t" + data[4]);
 								data[0] = BrigthnessID;
 							}
 							else
@@ -111,7 +111,7 @@ namespace AmbientLight
 								//TODO debug...
 								//logger.Debug(DebugCategory.Spammer, "Original:\t" + data[0] + "\t" + data[1] + "\t" + data[2] + "\t" + data[3] + "\t" + data[4]);
 
-								LED.leds[BrigthnessID_Alt][data[0]].GetRGB(out byte[] cache);
+								LED.leds[BrigthnessID_Alt][data[0]].GetData(out byte[] cache);
 
 								double alpha = PowerManager.instance.GetAlpha(arduino.queue[0].GetVoltage());
 
@@ -134,7 +134,7 @@ namespace AmbientLight
 
 
 								//TODO debug...
-								//logger.Debug(DebugCategory.Spammer, "Transformed:\t" + data[0] + "\t" + data[1] + "\t" + data[2] + "\t" + data[3] + "\t" + data[4]);
+								logger.Debug(DebugCategory.Spammer, "Transformed:\t" + data[0] + "\t" + data[1] + "\t" + data[2] + "\t" + data[3] + "\t" + data[4]);
 							}
 
 							arduino.serial.Write(new byte[] { data[0], data[1], data[2], data[3], data[4] }, 0, 5);

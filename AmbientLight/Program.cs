@@ -51,46 +51,29 @@ namespace AmbientLight
 				new StripPart(0, 0, 11, Voltage.V5, LEDType.WS2812)
 			});
 			*/
-
+			
 			ColorManager monitorForeColor = ColorManager.GetColorManagerByID(ColorManagers.TesterColorManager);
 			ColorManager monitorBackColor = ColorManager.GetColorManagerByID(ColorManagers.TesterColorManager);
 			monitorBackColor.CloneDeltaTime(monitorForeColor, 10000);
 
-			VirtualStrip monitor = new VirtualStrip(logger, Effects.TesterEffect, 10, monitorForeColor, monitorBackColor, new StripPart[]
+			VirtualStrip monitor = new VirtualStrip(logger, Effects.TesterEffect, 20, monitorForeColor, monitorBackColor, new StripPart[]
 			{
 				new StripPart(3, 0, 4, Voltage.V12, LEDType.WS2811),
 				new StripPart(3, 5, 19, Voltage.V12, LEDType.WS2811),
 				new StripPart(3, 20, 37, Voltage.V12, LEDType.WS2811)
 			});
-			Thread.Sleep(5000);
-			logger.Log("----------------------------------------");
-			monitor.effect.On();
+			//monitor.effect.On();
 			
-			/*
-			Thread.Sleep(5000);
-			for (int k = 0; k < 25; k++)
+			ColorManager fanForeColor = ColorManager.GetColorManagerByID(ColorManagers.TesterColorManager);
+			ColorManager fanBackColor = ColorManager.GetColorManagerByID(ColorManagers.TesterColorManager);
+			fanBackColor.CloneDeltaTime(fanForeColor, 10000);
+			VirtualStrip fan = new VirtualStrip(logger, Effects.TesterEffect, 10, fanForeColor, fanBackColor, new StripPart[]
 			{
-				logger.Log("----------------------------------------");
-				
-				int j = 0;
-				while (j < 10)
-				{
-					LED.leds[3][j].SetRGB((byte)(k * 10), (byte)(k * 10), (byte)(k * 10));
-					j++;
-				}
-				while (j < 37)
-				{
-					LED.leds[3][j].SetRGB(255, 255, 255);
-					j++;
-				}
-				
+				new StripPart(0, 0, 13, Voltage.V5, LEDType.WS2812),
+				new StripPart(0, 14, 29, Voltage.V5, LEDType.WS2812)
+			});
 
-				Arduino.instance.Flush(3);
-
-				
-				Thread.Sleep(1000);
-			}
-			*/
+			//fan.effect.On();
 
 			//TODO do the things
 

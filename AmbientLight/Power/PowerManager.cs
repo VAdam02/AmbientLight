@@ -40,7 +40,7 @@ namespace AmbientLight.Power
 			alphas = new double[powerlimits.Length];
 			for (int i = 0; i < alphas.Length; i++)
 			{
-				alphas[i] = 0;
+				alphas[i] = 0.5;
 			}
 
 			lasttime = new long[powerlimits.Length];
@@ -81,7 +81,7 @@ namespace AmbientLight.Power
 				usage += (int)Math.Round(Curve.Linear(color.r, time, values)[0], 0);
 				usage += (int)Math.Round(Curve.Linear(color.g, time, values)[0], 0);
 				usage += (int)Math.Round(Curve.Linear(color.b, time, values)[0], 0);
-				return usage * 3;
+				return usage;
 			}
 			else
 			{
@@ -128,7 +128,8 @@ namespace AmbientLight.Power
 			if (alpha1 <= alpha2)
 			{
 				alpha = alpha1;
-				logger.Debug(DebugCategory.Common, "jej - " + voltage.ToString(), "Local alpha: " + Math.Round(alpha1 * 100, 0) + "% \tGlobal alpha: " + Math.Round(alpha2 * 100, 0) + "% \tNew alpha: " + Math.Round(alpha * 100, 0));
+				//TODO debug...
+				//logger.Debug(DebugCategory.Common, "jej - " + voltage.ToString(), "Local alpha: " + Math.Round(alpha1 * 100, 0) + "% \tGlobal alpha: " + Math.Round(alpha2 * 100, 0) + "% \tNew alpha: " + Math.Round(alpha * 100, 0));
 			}
 			else
 			{
@@ -178,7 +179,7 @@ namespace AmbientLight.Power
 					if (maxj != -1)
 					{
 						//TODO debug...
-						logger.Error("módosítom " + (byte)(255 * alphas[maxj]) + "\t" + ((Voltage)maxj).ToString() + " ");
+						logger.Error("módosítom " + (byte)(255 * alphas[maxj]) + "\t" + ((Voltage)maxj).ToString() + "\t" + powerusages[0] + "\t" + powerusages[1] + "\t" + powerusages[2]);
 						Arduino.instance.SetBrightness((byte)(255 * alphas[maxj]), (byte)i, (Voltage)maxj);
 					}
 				}
@@ -187,8 +188,8 @@ namespace AmbientLight.Power
 
 
 			//TODO debug...
-			LED.leds[Arduino.BrigthnessID_Alt][3].GetRGB(out byte[] data);
-			logger.Error(powerusages[0] + "\t" + powerusages[1] + "\t" + powerusages[2] + "\t" + alphas[(int)voltage] + "\t" + data[2]);
+			LED.leds[Arduino.BrigthnessID_Alt][3].GetData(out byte[] data);
+			//logger.Error(powerusages[0] + "\t" + powerusages[1] + "\t" + powerusages[2] + "\t" + alphas[(int)voltage] + "\t" + data[2]);
 			return alphas[(int)voltage];
 		}
 	}

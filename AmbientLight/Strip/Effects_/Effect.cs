@@ -112,6 +112,7 @@ namespace AmbientLight.Strip
 			t.Start();
 		}
 
+		private static double avg = 0;
 		private static void LoopManager(Effect effect)
 		{
 			if (effect.paused)
@@ -133,14 +134,18 @@ namespace AmbientLight.Strip
 			{
 				long current = DateTimeOffset.Now.ToUnixTimeMilliseconds();
 
-				if (Arduino.instance.GetQueueSize() > 100)
+				if (Arduino.instance.GetQueueSize() > 200)
 				{
-					effect.minDeltaTime = (int)(1000 / Math.Max((double)effect.maxFPS / ((double)Arduino.instance.GetQueueSize() / 100), 2));
+					effect.minDeltaTime = (int)(1000 / Math.Max((double)effect.maxFPS / ((double)Arduino.instance.GetQueueSize() / 200), 2));
 				}
 				else
 				{
 					effect.minDeltaTime = 1000 / effect.maxFPS;
 				}
+
+				//TODO debug...
+				avg = avg * 0.9 + effect.minDeltaTime * 0.1;
+				effect.logger.Log("FPS: " + Math.Round(1000 / avg, 0));
 
 				if ((current - lasttime) < effect.minDeltaTime)
 				{

@@ -16,6 +16,7 @@ namespace AmbientLight.Strip.ColorManagers_
 
 		protected override Color GetColor(long deltatime)
 		{
+			//return new Color() { r = 255, g = 255, b = 255 };
 			double[] data = Curve.Linear(deltatime,
 				new double[] { 0, 10000, 20000, 30000, 40000, 50000, 60000 },
 				new double[][] { new double[] { 255, 0, 0 },

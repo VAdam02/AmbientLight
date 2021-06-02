@@ -82,7 +82,7 @@ namespace AmbientLight.Strip.LEDs
 			return false; //not changed
 		}
 
-		public bool GetRGB(out byte[] data)
+		public bool GetData(out byte[] data)
 		{
 			data = new byte[5];
 			data[0] = pin;
