@@ -9,8 +9,12 @@ namespace AmbientLight.Power
 	{
 		public static PowerManager instance;
 
-		double maxusage = 0.75;
+		#region Config
+		private int minDeltaTimeBetweenRefresh = 50;
+		private double maxusage = 0.75;
 		int[] powerlimits = new int[] { 750, 750, 750 };
+		#endregion
+
 		public int[] powerusages;
 		double[] alphas;
 		long[] lasttime;
@@ -89,34 +93,37 @@ namespace AmbientLight.Power
 		public double GetAlpha(Voltage voltage)
 		{
 			#region Decrase recalculat count
-			if (DateTimeOffset.Now.ToUnixTimeMilliseconds() < lasttime[(int)voltage] + 50)
+			if (DateTimeOffset.Now.ToUnixTimeMilliseconds() < lasttime[(int)voltage] + minDeltaTimeBetweenRefresh)
 			{
 				return this.alphas[(int)voltage];
 			}
 			lasttime[(int)voltage] = DateTimeOffset.Now.ToUnixTimeMilliseconds();
 			#endregion
 
-			//local
-			double alpha1 = alphas[(int)voltage] + ((powerlimits[(int)voltage] * (maxusage*0.9)) - powerusages[(int)voltage]) / (powerlimits[(int)voltage] * maxusage * 10);
+			#region Local alpha
+			double localAlphaDivider = (powerlimits[(int)voltage] * maxusage * 0.9) * (1000 / minDeltaTimeBetweenRefresh) * 10;
+			double alpha1 = alphas[(int)voltage] + ((powerlimits[(int)voltage] * (maxusage*0.9)) - powerusages[(int)voltage]) / localAlphaDivider;
 			if (alpha1 > 1) { alpha1 = 1; }
 			else if (alpha1 < 0) { alpha1 = 0; }
-			
-			//global
+			#endregion
+
+			#region Global alha
+			double globalAlphaDivider = (powerlimits[0] * maxusage * 0.9) * (1000 / minDeltaTimeBetweenRefresh) * 10;
 			double alpha2;
-			if (DateTimeOffset.Now.ToUnixTimeMilliseconds() < lasttime[0] + 50)
+			if (DateTimeOffset.Now.ToUnixTimeMilliseconds() < lasttime[0] + minDeltaTimeBetweenRefresh)
 			{
 				alpha2 = alphas[0];
 			}
 			else
 			{
-				alpha2 = alphas[0] + ((powerlimits[0] * (maxusage * 0.9)) - powerusages[0]) / (powerlimits[0] * maxusage * 10);
+				alpha2 = alphas[0] + ((powerlimits[0] * (maxusage * 0.9)) - powerusages[0]) / globalAlphaDivider;
 			}
 			lasttime[0] = DateTimeOffset.Now.ToUnixTimeMilliseconds();
-
 			if (alpha2 > 1) { alpha2 = 1; }
 			else if (alpha2 < 0) { alpha2 = 0; }
+			#endregion
 
-			//select
+			#region Selector
 			double alpha;
 			if (alpha1 <= alpha2)
 			{
@@ -133,7 +140,7 @@ namespace AmbientLight.Power
 			if (alpha > 1) { alpha = 1; }
 			else if (alpha < 0) { alpha = 0; }
 			#pragma warning restore IDE0059 // Unnecessary assignment of a value
-
+			#endregion
 
 			alphas[(int)voltage] = Math.Round(alpha, 3);
 			alphas[0] = Math.Round(alpha2, 3);
