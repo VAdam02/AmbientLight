@@ -12,6 +12,16 @@ namespace AmbientLight.Commands
 			string[] data = new string[0];
 			while (running)
 			{
+				if (data.Length > 0)
+				{
+					string[] cache = new string[data.Length - 1];
+					for (int i = 0; i < cache.Length; i++)
+					{
+						cache[i] = data[i + 1];
+					}
+					data = cache;
+				}
+
 				if (data.Length == 0)
 				{
 					data = logger.ReadLine("").ToLower().Split(' ');
@@ -19,11 +29,9 @@ namespace AmbientLight.Commands
 
 				if (data[0] == "exit") { running = false; }
 				else if (data[0] == "help") { Help(logger); }
-				else if (data[0] == "state") { State.Run(logger, data); }
+				else if (data[0] == "state") { State.Run(logger, ref data); }
 
 				else { logger.Log("Use HELP for the commands"); }
-
-				data = new string[0];
 			}
 		}
 
