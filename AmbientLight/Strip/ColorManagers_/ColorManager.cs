@@ -73,7 +73,7 @@ namespace AmbientLight.Strip
 				clone.Update();
 				deltatime = clone.deltatime + cloneDifference;
 			}
-			else
+			else if (!paused)
 			{
 				deltatime += (DateTimeOffset.Now.ToUnixTimeMilliseconds() - lasttime);
 				lasttime = DateTimeOffset.Now.ToUnixTimeMilliseconds();

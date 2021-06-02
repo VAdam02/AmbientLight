@@ -63,7 +63,7 @@ namespace AmbientLight
 				new StripPart(3, 20, 37, Voltage.V12, LEDType.WS2811)
 			});
 			//monitor.effect.On();
-			
+
 			ColorManager fanForeColor = ColorManager.GetColorManagerByID(ColorManagers.TesterColorManager);
 			ColorManager fanBackColor = ColorManager.GetColorManagerByID(ColorManagers.TesterColorManager);
 			fanBackColor.CloneDeltaTime(fanForeColor, 10000);
@@ -84,6 +84,11 @@ namespace AmbientLight
 
 		public static void StopProgram()
 		{
+			for (int i = 0; i < VirtualStrip.strips.Count; i++)
+			{
+				VirtualStrip.strips[i].effect.Off();
+			}
+
 			Console.ReadKey();
 			Environment.Exit(0);
 		}
