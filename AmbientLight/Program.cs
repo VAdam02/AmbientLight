@@ -44,18 +44,32 @@ namespace AmbientLight
 			}
 			*/
 
-			/*
-			VirtualStrip round = new VirtualStrip(new StripPart[]
+			ColorManager roundForeColor = ColorManager.GetColorManagerByID(ColorManagers.TesterColorManager);
+			ColorManager roundBackColor = ColorManager.GetColorManagerByID(ColorManagers.TesterColorManager);
+			roundBackColor.CloneDeltaTime(roundForeColor, 10000);
+			VirtualStrip round = new VirtualStrip(logger, Effects.TesterEffect, 20, roundForeColor, roundBackColor, new StripPart[]
 			{
+				new StripPart(2, 11, 0, Voltage.V12, LEDType.WS2811),
+
 				new StripPart(0, 12, 29, Voltage.V5, LEDType.WS2812),
-				new StripPart(0, 0, 11, Voltage.V5, LEDType.WS2812)
+				new StripPart(0, 0, 11, Voltage.V5, LEDType.WS2812),
+
+				new StripPart(2, 0, 11, Voltage.V12, LEDType.WS2811)
 			});
-			*/
-			
+			//round.effect.On();
+
+			ColorManager fanForeColor = ColorManager.GetColorManagerByID(ColorManagers.TesterColorManager);
+			ColorManager fanBackColor = ColorManager.GetColorManagerByID(ColorManagers.TesterColorManager);
+			fanBackColor.CloneDeltaTime(fanForeColor, 10000);
+			VirtualStrip fan = new VirtualStrip(logger, Effects.TesterEffect, 20, fanForeColor, fanBackColor, new StripPart[]
+			{
+				new StripPart(1, 0, 26, Voltage.V5, LEDType.WS2812),
+			});
+			//fan.effect.On();
+
 			ColorManager monitorForeColor = ColorManager.GetColorManagerByID(ColorManagers.TesterColorManager);
 			ColorManager monitorBackColor = ColorManager.GetColorManagerByID(ColorManagers.TesterColorManager);
 			monitorBackColor.CloneDeltaTime(monitorForeColor, 10000);
-
 			VirtualStrip monitor = new VirtualStrip(logger, Effects.TesterEffect, 20, monitorForeColor, monitorBackColor, new StripPart[]
 			{
 				new StripPart(3, 0, 4, Voltage.V12, LEDType.WS2811),
@@ -63,17 +77,6 @@ namespace AmbientLight
 				new StripPart(3, 20, 37, Voltage.V12, LEDType.WS2811)
 			});
 			//monitor.effect.On();
-
-			ColorManager fanForeColor = ColorManager.GetColorManagerByID(ColorManagers.TesterColorManager);
-			ColorManager fanBackColor = ColorManager.GetColorManagerByID(ColorManagers.TesterColorManager);
-			fanBackColor.CloneDeltaTime(fanForeColor, 10000);
-			VirtualStrip fan = new VirtualStrip(logger, Effects.TesterEffect, 10, fanForeColor, fanBackColor, new StripPart[]
-			{
-				new StripPart(0, 0, 13, Voltage.V5, LEDType.WS2812),
-				new StripPart(0, 14, 29, Voltage.V5, LEDType.WS2812)
-			});
-
-			//fan.effect.On();
 
 			//TODO do the things
 
