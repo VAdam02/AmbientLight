@@ -52,7 +52,7 @@ namespace AmbientLight
 			});
 			*/
 
-			VirtualStrip monitor = new VirtualStrip(logger, Effects.Rainbow, 10, new ColorManager(), new StripPart[]
+			VirtualStrip monitor = new VirtualStrip(logger, Effects.TesterEffect, 10, new ColorManager(), new ColorManager(), new StripPart[]
 			{
 				new StripPart(3, 0, 18, Voltage.V12, LEDType.WS2811),
 				new StripPart(3, 19, 19, Voltage.V12, LEDType.WS2811),

@@ -1,6 +1,7 @@
 ﻿using AmbientLight.Strip.LEDs;
 using System.Collections.Generic;
 using System.Linq;
+
 namespace AmbientLight.Strip
 {
 	class StripPart

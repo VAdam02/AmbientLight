@@ -11,7 +11,7 @@ namespace AmbientLight.Strip
 {
 	enum Effects
 	{
-		Rainbow
+		TesterEffect
 	}
 
 	class Effect
@@ -23,12 +23,12 @@ namespace AmbientLight.Strip
 		private int minDeltaTime;
 		private Logger logger;
 
-		public static Effect GetEffectByID(Logger logger, Effects effect, VirtualStrip strip, int maxFPS, ColorManager colorManager)
+		public static Effect GetEffectByID(Logger logger, Effects effect, VirtualStrip strip, int maxFPS, ColorManager forecolorManager, ColorManager backcolorManager)
 		{
 			switch (effect)
 			{
-				case Effects.Rainbow:
-					return new Rainbow(logger, strip, maxFPS, colorManager);
+				case Effects.TesterEffect:
+					return new TesterEffect(logger, strip, maxFPS, forecolorManager, backcolorManager);
 			}
 
 			return new Effect();
@@ -48,6 +48,7 @@ namespace AmbientLight.Strip
 		#region On/Pause/Off
 		Thread t;
 		private bool running = false;
+		private bool paused = false;
 		public void On()
 		{
 			logger.Debug(DebugCategory.Rare, "Effect started");
@@ -59,6 +60,7 @@ namespace AmbientLight.Strip
 		{
 			logger.Debug(DebugCategory.Rare, "Effect paused");
 			running = false;
+			paused = true;
 			try { t.Join(); } catch { }
 			colorManager.Pause();
 		}
@@ -66,12 +68,13 @@ namespace AmbientLight.Strip
 		public void Off()
 		{
 			Pause();
+			paused = false;
 
 			logger.Debug(DebugCategory.Rare, "Effect stopped");
 
 			colorManager.Off();
 			
-			Thread.Sleep(maxFPS * 20);
+			Thread.Sleep(2 * minDeltaTime);
 
 			for (int i = 0; i < strip.parts.Count; i++)
 			{
@@ -110,7 +113,18 @@ namespace AmbientLight.Strip
 
 		private static void LoopManager(Effect effect)
 		{
-			effect.Once();
+			if (effect.paused)
+			{
+				//tasks if paused and unpaused
+				//return to normal state
+				effect.paused = false;
+			}
+			else
+			{
+				//tasks if started in normal the normal way
+				effect.Once();
+				effect.Show();
+			}
 
 			long lasttime = DateTimeOffset.Now.ToUnixTimeMilliseconds();
 

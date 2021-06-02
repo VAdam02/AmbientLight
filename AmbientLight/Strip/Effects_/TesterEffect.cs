@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace AmbientLight.Strip.Effects_
 {
-	class Rainbow : Effect
+	class TesterEffect : Effect
 	{
-		public Rainbow(Logger logger, VirtualStrip strip, int maxFPS, ColorManager colorManager)
+		public TesterEffect(Logger logger, VirtualStrip strip, int maxFPS, ColorManager forecolorManager, ColorManager backcolorManager)
 		{
 			logger = new Logger(logger);
-			logger.AddLevel("Rainbow");
+			logger.AddLevel("TesterEffect");
 			Setup(logger, strip, maxFPS, colorManager);
 
 			
@@ -20,6 +20,7 @@ namespace AmbientLight.Strip.Effects_
 
 		protected override void Once()
 		{
+			k = 0;
 			int j = 10;
 			while (j < 37)
 			{

@@ -18,7 +18,7 @@ namespace AmbientLight.Strip
 
 		private Logger logger;
 
-		public VirtualStrip(Logger logger, Effects effect, int maxFPS, ColorManager colorManager, StripPart[] stripParts)
+		public VirtualStrip(Logger logger, Effects effect, int maxFPS, ColorManager forecolorManager, ColorManager backcolorManager, StripPart[] stripParts)
 		{
 			parts = stripParts.ToList();
 			strips.Add(this);
@@ -26,7 +26,7 @@ namespace AmbientLight.Strip
 			this.logger = new Logger(logger);
 			this.logger.AddLevel("VirtualStrip-" + strips.IndexOf(this));
 
-			SetEffect(Effect.GetEffectByID(this.logger, effect, this, maxFPS, colorManager));
+			SetEffect(Effect.GetEffectByID(this.logger, effect, this, maxFPS, forecolorManager, backcolorManager));
 		}
 
 		public void SetEffect(Effect effect)
