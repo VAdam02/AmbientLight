@@ -61,7 +61,10 @@
     <Compile Include="Strip\ColorManagers_\ColorManager.cs" />
     <Compile Include="Strip\ColorManagers_\TesterColorManager.cs" />
     <Compile Include="Strip\Effects_\Effect.cs" />
-    <Compile Include="Strip\Effects_\SceenTopEffect.cs" />
+    <Compile Include="Strip\Effects_\ScreenRightEffect.cs" />
+    <Compile Include="Strip\Effects_\ScreenLeftEffect.cs" />
+    <Compile Include="Strip\Effects_\ScreenBottomEffect.cs" />
+    <Compile Include="Strip\Effects_\ScreenTopEffect.cs" />
     <Compile Include="Strip\Effects_\TesterEffect.cs" />
     <Compile Include="Strip\LEDs\BrightnessChangeEvent.cs" />
     <Compile Include="Strip\LEDs\LED.cs" />

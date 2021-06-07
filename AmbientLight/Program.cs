@@ -37,21 +37,31 @@ namespace AmbientLight
 			LED.SetLEDStripLength(4, 1);
 			LED.SetLEDStripLength(5, 1);
 
-			/*
-			for (int i = 0; i < LED.leds.Length; i++)
-			{
-				Arduino.instance.SetBrightness(255, (byte)i, Voltage.None);
-			}
-			*/
-
-			ColorManager monitorTopForeColor = ColorManager.GetColorManagerByID(ColorManagers.Empty);
-			ColorManager monitorTopBackColor = ColorManager.GetColorManagerByID(ColorManagers.Empty);
-			monitorTopBackColor.CloneDeltaTime(monitorTopForeColor, 0);
-			VirtualStrip monitorTop = new VirtualStrip(logger, Effects.SceenTopEffect, 20, monitorTopForeColor, monitorTopBackColor, new StripPart[]
+			#region Monitor
+			VirtualStrip monitorTop = new VirtualStrip(logger, Effects.SceenTopEffect, 20, ColorManager.GetColorManagerByID(ColorManagers.Empty), ColorManager.GetColorManagerByID(ColorManagers.Empty), new StripPart[]
 			{
 				new StripPart(3, 11, 0, Voltage.V12, LEDType.WS2811),
 			});
 			//monitorTop.effect.On();
+
+			VirtualStrip monitorLeft = new VirtualStrip(logger, Effects.SceenLeftEffect, 20, ColorManager.GetColorManagerByID(ColorManagers.Empty), ColorManager.GetColorManagerByID(ColorManagers.Empty), new StripPart[]
+			{
+				new StripPart(3, 12, 18, Voltage.V12, LEDType.WS2811),
+			});
+			//monitorLeft.effect.On();
+
+			VirtualStrip monitorBottom = new VirtualStrip(logger, Effects.SceenBottomEffect, 20, ColorManager.GetColorManagerByID(ColorManagers.Empty), ColorManager.GetColorManagerByID(ColorManagers.Empty), new StripPart[]
+			{
+				new StripPart(3, 19, 30, Voltage.V12, LEDType.WS2811),
+			});
+			//monitorBottom.effect.On();
+
+			VirtualStrip monitorRight = new VirtualStrip(logger, Effects.SceenRightEffect, 20, ColorManager.GetColorManagerByID(ColorManagers.Empty), ColorManager.GetColorManagerByID(ColorManagers.Empty), new StripPart[]
+			{
+				new StripPart(3, 37, 30, Voltage.V12, LEDType.WS2811),
+			});
+			//monitorBottom.effect.On();
+			#endregion
 
 			ColorManager roundForeColor = ColorManager.GetColorManagerByID(ColorManagers.TesterColorManager);
 			ColorManager roundBackColor = ColorManager.GetColorManagerByID(ColorManagers.TesterColorManager);
@@ -76,17 +86,6 @@ namespace AmbientLight
 				new StripPart(1, 0, 26, Voltage.V5, LEDType.WS2812),
 			});
 			//fan.effect.On();
-
-			
-			ColorManager monitorForeColor = ColorManager.GetColorManagerByID(ColorManagers.TesterColorManager);
-			ColorManager monitorBackColor = ColorManager.GetColorManagerByID(ColorManagers.TesterColorManager);
-			monitorBackColor.CloneDeltaTime(monitorForeColor, 10000);
-			VirtualStrip monitor = new VirtualStrip(logger, Effects.TesterEffect, 20, monitorForeColor, monitorBackColor, new StripPart[]
-			//VirtualStrip monitor = new VirtualStrip(logger, Effects.TesterEffect, 20, roundForeColor, roundBackColor, new StripPart[]
-			{
-				new StripPart(3, 13, 37, Voltage.V12, LEDType.WS2811)
-			});
-			//monitor.effect.On();
 
 			//TODO do the things
 

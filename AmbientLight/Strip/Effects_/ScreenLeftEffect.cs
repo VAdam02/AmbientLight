@@ -1,14 +1,9 @@
 ﻿using AmbientLight.Strip.LEDs;
-using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AmbientLight.Strip.Effects_
 {
-	class SceenTopEffect : Effect
+	class ScreenLeftEffect : Effect
 	{
 		private Logger logger;
 
@@ -17,10 +12,10 @@ namespace AmbientLight.Strip.Effects_
 		private int ledCount = 0;
 		private int checkcount = 5;
 
-		public SceenTopEffect(Logger logger, VirtualStrip strip, int maxFPS, ColorManager foreColorManager, ColorManager backColorManager)
+		public ScreenLeftEffect(Logger logger, VirtualStrip strip, int maxFPS, ColorManager foreColorManager, ColorManager backColorManager)
 		{
 			this.logger = new Logger(logger);
-			this.logger.AddLevel("ScreenTopEffect");
+			this.logger.AddLevel("ScreenLeftEffect");
 			Setup(this.logger, strip, maxFPS, foreColorManager, backColorManager);
 		}
 
@@ -40,7 +35,7 @@ namespace AmbientLight.Strip.Effects_
 		protected override void Loop(int deltatime)
 		{
 			RefreshScreen();
-			double parcelWidth = screen.Width / ledCount;
+			double parcelWidth = screen.Height / ledCount;
 			parcelHeight = screen.Height / 3;
 			int LEDindex = 0;
 
@@ -57,7 +52,7 @@ namespace AmbientLight.Strip.Effects_
 					if (x2 > screen.Width) { x2 = screen.Width; }
 
 					//x1 counted, x2 over
-					leds[j].SetRGB(ParcelColor(x1, x2, 0, parcelHeight));
+					leds[j].SetRGB(ParcelColor(0, parcelHeight, x1, x2));
 				}
 			}
 		}
