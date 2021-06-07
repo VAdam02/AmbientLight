@@ -7,6 +7,7 @@ namespace AmbientLight.Strip
 {
 	enum Effects
 	{
+		SceenTopEffect,
 		TesterEffect
 	}
 
@@ -24,6 +25,8 @@ namespace AmbientLight.Strip
 		{
 			switch (effect)
 			{
+				case Effects.SceenTopEffect:
+					return new SceenTopEffect(logger, strip, maxFPS, forecolorManager, backcolorManager);
 				case Effects.TesterEffect:
 					return new TesterEffect(logger, strip, maxFPS, forecolorManager, backcolorManager);
 			}

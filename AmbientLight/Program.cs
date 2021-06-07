@@ -44,6 +44,15 @@ namespace AmbientLight
 			}
 			*/
 
+			ColorManager monitorTopForeColor = ColorManager.GetColorManagerByID(ColorManagers.Empty);
+			ColorManager monitorTopBackColor = ColorManager.GetColorManagerByID(ColorManagers.Empty);
+			monitorTopBackColor.CloneDeltaTime(monitorTopForeColor, 0);
+			VirtualStrip monitorTop = new VirtualStrip(logger, Effects.SceenTopEffect, 20, monitorTopForeColor, monitorTopBackColor, new StripPart[]
+			{
+				new StripPart(3, 11, 0, Voltage.V12, LEDType.WS2811),
+			});
+			//monitorTop.effect.On();
+
 			ColorManager roundForeColor = ColorManager.GetColorManagerByID(ColorManagers.TesterColorManager);
 			ColorManager roundBackColor = ColorManager.GetColorManagerByID(ColorManagers.TesterColorManager);
 			roundBackColor.CloneDeltaTime(roundForeColor, 10000);
@@ -58,13 +67,11 @@ namespace AmbientLight
 			});
 			//round.effect.On();
 
-			/*
 			ColorManager fanForeColor = ColorManager.GetColorManagerByID(ColorManagers.TesterColorManager);
 			ColorManager fanBackColor = ColorManager.GetColorManagerByID(ColorManagers.TesterColorManager);
 			fanBackColor.CloneDeltaTime(fanForeColor, 10000);
 			VirtualStrip fan = new VirtualStrip(logger, Effects.TesterEffect, 20, fanForeColor, fanBackColor, new StripPart[]
-			*/
-			VirtualStrip fan = new VirtualStrip(logger, Effects.TesterEffect, 20, roundForeColor, roundBackColor, new StripPart[]
+			//VirtualStrip fan = new VirtualStrip(logger, Effects.TesterEffect, 20, roundForeColor, roundBackColor, new StripPart[]
 			{
 				new StripPart(1, 0, 26, Voltage.V5, LEDType.WS2812),
 			});
@@ -75,12 +82,9 @@ namespace AmbientLight
 			ColorManager monitorBackColor = ColorManager.GetColorManagerByID(ColorManagers.TesterColorManager);
 			monitorBackColor.CloneDeltaTime(monitorForeColor, 10000);
 			VirtualStrip monitor = new VirtualStrip(logger, Effects.TesterEffect, 20, monitorForeColor, monitorBackColor, new StripPart[]
-			
 			//VirtualStrip monitor = new VirtualStrip(logger, Effects.TesterEffect, 20, roundForeColor, roundBackColor, new StripPart[]
 			{
-				new StripPart(3, 0, 4, Voltage.V12, LEDType.WS2811),
-				new StripPart(3, 5, 19, Voltage.V12, LEDType.WS2811),
-				new StripPart(3, 20, 37, Voltage.V12, LEDType.WS2811)
+				new StripPart(3, 13, 37, Voltage.V12, LEDType.WS2811)
 			});
 			//monitor.effect.On();
 

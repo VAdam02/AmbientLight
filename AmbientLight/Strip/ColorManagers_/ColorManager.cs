@@ -5,6 +5,7 @@ namespace AmbientLight.Strip
 {
 	enum ColorManagers
 	{
+		Empty,
 		TesterColorManager
 	}
 
@@ -19,6 +20,8 @@ namespace AmbientLight.Strip
 		{
 			switch (colorManager)
 			{
+				case ColorManagers.Empty:
+					return new ColorManager();
 				case ColorManagers.TesterColorManager:
 					return new TesterColorManager();
 			}

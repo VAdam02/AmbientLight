@@ -106,11 +106,10 @@ namespace AmbientLight.Strip.LEDs
 		public static LED[] GetLEDArray(byte pin, byte from, byte to)
 		{
 			LED[] ledarray = new LED[Math.Abs(to - from) + 1];
-
+			
 			if (ledarray.Length > 1)
 			{
 				int delta = (to - from) / Math.Abs(to - from);
-				if (delta < 0) { from -= 1; }
 				for (int i = 0; i < (ledarray.Length - 1); i++)
 				{
 					ledarray[i] = GetLED(pin, (byte)(from + (i * delta)));
