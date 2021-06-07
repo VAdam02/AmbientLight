@@ -13,6 +13,7 @@ namespace AmbientLight.Strip
 		private long deltatime;
 		private long lasttime;
 		private bool paused = false;
+		private bool running = false;
 
 		public static ColorManager GetColorManagerByID(ColorManagers colorManager)
 		{
@@ -46,8 +47,13 @@ namespace AmbientLight.Strip
 				paused = false;
 				lasttime = DateTimeOffset.Now.ToUnixTimeMilliseconds();
 			}
+			else if (running)
+			{
+
+			}
 			else
 			{
+				running = true;
 				deltatime = 0;
 				lasttime = DateTimeOffset.Now.ToUnixTimeMilliseconds();
 			}
@@ -63,6 +69,7 @@ namespace AmbientLight.Strip
 
 		public void Off()
 		{
+			running = false;
 			deltatime = 0;
 		}
 
