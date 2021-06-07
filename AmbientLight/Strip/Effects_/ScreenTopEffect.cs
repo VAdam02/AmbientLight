@@ -1,4 +1,5 @@
 ﻿using AmbientLight.Strip.LEDs;
+using System;
 using System.Drawing;
 
 namespace AmbientLight.Strip.Effects_
@@ -75,10 +76,10 @@ namespace AmbientLight.Strip.Effects_
 					b += screen.GetPixel(i, j).B;
 					checks++;
 
-					j += checkcount;
+					j += Math.Abs(y1 - y2) / checkcount;
 				}
 
-				i += checkcount;
+				i += Math.Abs(x1 - x2) / checkcount;
 			}
 
 			return new Color()

@@ -1,4 +1,5 @@
 ﻿using AmbientLight.Strip.LEDs;
+using System;
 using System.Drawing;
 
 namespace AmbientLight.Strip.Effects_
@@ -52,13 +53,14 @@ namespace AmbientLight.Strip.Effects_
 					if (x2 > screen.Width) { x2 = screen.Width; }
 
 					//x1 counted, x2 over
-					leds[j].SetRGB(ParcelColor(x1, x2, parcelHeight, screen.Height - parcelHeight));
+					leds[j].SetRGB(ParcelColor(x1, x2, screen.Height - parcelHeight, screen.Height));
 				}
 			}
 		}
 
 		private Color ParcelColor(int x1, int x2, int y1, int y2)
 		{
+
 			int r = 0;
 			int g = 0;
 			int b = 0;
@@ -75,10 +77,10 @@ namespace AmbientLight.Strip.Effects_
 					b += screen.GetPixel(i, j).B;
 					checks++;
 
-					j += checkcount;
+					j += Math.Abs(y1 - y2) / checkcount;
 				}
 
-				i += checkcount;
+				i += Math.Abs(x1-x2) / checkcount;
 			}
 
 			return new Color()

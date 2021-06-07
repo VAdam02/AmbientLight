@@ -1,9 +1,5 @@
-﻿using AmbientLight.Strip.LEDs;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AmbientLight.Strip
 {
@@ -30,13 +26,11 @@ namespace AmbientLight.Strip
 		public void SetEffect(Effect effect)
 		{
 			logger.Log("Effect changed");
-			if (effect != null)
+			if (this.effect != null)
 			{
-				//TODO terminate the before
+				this.effect.Off();
 			}
 			this.effect = effect;
-			
-			//TODO start the next
 		}
 	}
 }

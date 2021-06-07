@@ -5,8 +5,6 @@ using AmbientLight.Strip.LEDs;
 using AmbientLight.Commands;
 using AmbientLight.Power;
 using AmbientLight.Strip;
-using System.Threading;
-using AmbientLight.Strip.Effects_;
 
 namespace AmbientLight
 {
@@ -38,25 +36,26 @@ namespace AmbientLight
 			LED.SetLEDStripLength(5, 1);
 
 			#region Monitor
-			VirtualStrip monitorTop = new VirtualStrip(logger, Effects.SceenTopEffect, 20, ColorManager.GetColorManagerByID(ColorManagers.Empty), ColorManager.GetColorManagerByID(ColorManagers.Empty), new StripPart[]
+			int monitorFPS = 60;
+			VirtualStrip monitorTop = new VirtualStrip(logger, Effects.SceenTopEffect, monitorFPS, ColorManager.GetColorManagerByID(ColorManagers.Empty), ColorManager.GetColorManagerByID(ColorManagers.Empty), new StripPart[]
 			{
 				new StripPart(3, 11, 0, Voltage.V12, LEDType.WS2811),
 			});
 			//monitorTop.effect.On();
 
-			VirtualStrip monitorLeft = new VirtualStrip(logger, Effects.SceenLeftEffect, 20, ColorManager.GetColorManagerByID(ColorManagers.Empty), ColorManager.GetColorManagerByID(ColorManagers.Empty), new StripPart[]
+			VirtualStrip monitorLeft = new VirtualStrip(logger, Effects.SceenLeftEffect, monitorFPS, ColorManager.GetColorManagerByID(ColorManagers.Empty), ColorManager.GetColorManagerByID(ColorManagers.Empty), new StripPart[]
 			{
 				new StripPart(3, 12, 18, Voltage.V12, LEDType.WS2811),
 			});
 			//monitorLeft.effect.On();
 
-			VirtualStrip monitorBottom = new VirtualStrip(logger, Effects.SceenBottomEffect, 20, ColorManager.GetColorManagerByID(ColorManagers.Empty), ColorManager.GetColorManagerByID(ColorManagers.Empty), new StripPart[]
+			VirtualStrip monitorBottom = new VirtualStrip(logger, Effects.SceenBottomEffect, monitorFPS, ColorManager.GetColorManagerByID(ColorManagers.Empty), ColorManager.GetColorManagerByID(ColorManagers.Empty), new StripPart[]
 			{
 				new StripPart(3, 19, 30, Voltage.V12, LEDType.WS2811),
 			});
 			//monitorBottom.effect.On();
 
-			VirtualStrip monitorRight = new VirtualStrip(logger, Effects.SceenRightEffect, 20, ColorManager.GetColorManagerByID(ColorManagers.Empty), ColorManager.GetColorManagerByID(ColorManagers.Empty), new StripPart[]
+			VirtualStrip monitorRight = new VirtualStrip(logger, Effects.SceenRightEffect, monitorFPS, ColorManager.GetColorManagerByID(ColorManagers.Empty), ColorManager.GetColorManagerByID(ColorManagers.Empty), new StripPart[]
 			{
 				new StripPart(3, 37, 30, Voltage.V12, LEDType.WS2811),
 			});
