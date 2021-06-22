@@ -12,7 +12,7 @@ namespace AmbientLight.Power
 		#region Config
 		private int minDeltaTimeBetweenRefresh = 50;
 		private double maxusage = 0.75;
-		int[] powerlimits = new int[] { 750, 750, 750 };
+		int[] powerlimits = new int[] { 500, 750, 750 };
 		#endregion
 
 		double[] alphas;
@@ -49,13 +49,13 @@ namespace AmbientLight.Power
 			#region Decrase recalculat count
 			if (DateTimeOffset.Now.ToUnixTimeMilliseconds() < lasttime[(int)voltage] + minDeltaTimeBetweenRefresh)
 			{
-				return alphas[(int)voltage];
+				return this.alphas[(int)voltage];
 			}
 			lasttime[(int)voltage] = DateTimeOffset.Now.ToUnixTimeMilliseconds();
 			#endregion
 
 			#region Local alpha
-			double localAlphaDivider = (powerlimits[(int)voltage] * maxusage * 0.9) * (1000 / minDeltaTimeBetweenRefresh) * 10; //decrase the last num to incrase the reaction speed *maybe*
+			double localAlphaDivider = (powerlimits[(int)voltage] * maxusage * 0.9) * (1000 / minDeltaTimeBetweenRefresh) * 10;
 			double alpha1 = alphas[(int)voltage] + ((powerlimits[(int)voltage] * (maxusage*0.9)) - PowerUsageManager.instance.GetPowerUsage(voltage)) / localAlphaDivider;
 			if (alpha1 > 1) { alpha1 = 1; }
 			else if (alpha1 < 0) { alpha1 = 0; }
