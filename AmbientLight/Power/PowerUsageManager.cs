@@ -24,6 +24,15 @@ namespace AmbientLight.Power
 			this.logger = new Logger(logger);
 			this.logger.AddLevel("PowerUsageManager");
 
+			powerusages = new int[LED.voltages.Length];
+			for (int i = 0; i < powerusages.Length; i++)
+			{
+				powerusages[i] = 1;
+			}
+
+
+			queue = new List<PowerUsageChange>();
+			queueManager = new Thread(() => QueueManager(this));
 			StartQueue();
 		}
 

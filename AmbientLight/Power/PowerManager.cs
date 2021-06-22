@@ -1,4 +1,4 @@
-﻿using AmbientLight.API;
+﻿
 using AmbientLight.Strip;
 using AmbientLight.Strip.LEDs;
 using System;
@@ -15,7 +15,6 @@ namespace AmbientLight.Power
 		int[] powerlimits = new int[] { 500, 750, 750 };
 		#endregion
 
-		//TODO make a queue list because it can slide away with the values due to the asynchronous write and read sequences off the leds
 		double[] alphas;
 		long[] lasttime;
 

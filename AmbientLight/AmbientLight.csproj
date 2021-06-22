@@ -54,6 +54,7 @@
     <Compile Include="Commands\Home_\State_\On.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Power\PowerManager.cs" />
+    <Compile Include="Power\PowerUsageManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ArduinoFolder\Arduino.cs" />

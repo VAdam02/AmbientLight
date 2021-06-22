@@ -139,7 +139,7 @@ namespace AmbientLight.Strip.LEDs
 		public void RefreshPower()
 		{
 			int last = powerusage;
-			powerusage = PowerUsageManager.instance.CalculateUsage(color , PowerManager.instance.GetAlpha(voltage), voltage, type);
+			powerusage = PowerUsageManager.instance.CalculateUsage(color, PowerManager.instance.GetAlpha(voltage), voltage, type);
 
 			PowerUsageManager.instance.RegisterChange(new PowerUsageChange() { voltage = voltage, deltaUsage = powerusage - last });
 		}
