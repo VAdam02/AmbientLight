@@ -12,11 +12,10 @@ namespace AmbientLight.Power
 		#region Config
 		private int minDeltaTimeBetweenRefresh = 50;
 		private double maxusage = 0.75;
-		int[] powerlimits = new int[] { 750, 750, 750 };
+		int[] powerlimits = new int[] { 500, 750, 750 };
 		#endregion
 
 		//TODO make a queue list because it can slide away with the values due to the asynchronous write and read sequences off the leds
-		public int[] powerusages;
 		double[] alphas;
 		long[] lasttime;
 
@@ -31,12 +30,7 @@ namespace AmbientLight.Power
 		PowerManager()
 		{
 			logger.AddLevel("PowerManager");
-
-			powerusages = new int[powerlimits.Length];
-			for (int i = 0; i < powerusages.Length; i++)
-			{
-				powerusages[i] = 1;
-			}
+			PowerUsageManager.Instantiate(logger);
 
 			alphas = new double[powerlimits.Length];
 			for (int i = 0; i < alphas.Length; i++)
@@ -51,46 +45,6 @@ namespace AmbientLight.Power
 			}
 		}
 
-		#region CalculateUsage
-		public int CalculateUsage(Color color, byte brightness, Voltage voltage, LEDType type)
-		{
-			return CalculateUsage(color, (double)brightness/255, voltage, type);
-		}
-		public int CalculateUsage(Color color, double brightness, Voltage voltage, LEDType type)
-		{
-			return CalculateUsage(new Color() { r = (byte)(color.r * brightness), g = (byte)(color.g * brightness), b = (byte)(color.b * brightness) }, voltage, type);
-		}
-		private int CalculateUsage(Color color, Voltage voltage, LEDType type)
-		{
-			if (voltage == Voltage.V12 && type == LEDType.WS2811)
-			{
-				double[] time = new double[] { 0, 255.1 };
-				double[][] values = new double[][] { new double[] { 0.2 }, new double[] { 4.5 } };
-
-				int usage = 0;
-				usage += (int)Math.Round(Curve.Linear(color.r, time, values)[0], 0);
-				usage += (int)Math.Round(Curve.Linear(color.g, time, values)[0], 0);
-				usage += (int)Math.Round(Curve.Linear(color.b, time, values)[0], 0);
-				return usage * 3;
-			}
-			else if (voltage == Voltage.V5 && type == LEDType.WS2812)
-			{
-				double[] time = new double[] { 0, 255.1 };
-				double[][] values = new double[][] { new double[] { 0.2 }, new double[] { 4.5 } };
-
-				int usage = 0;
-				usage += (int)Math.Round(Curve.Linear(color.r, time, values)[0], 0);
-				usage += (int)Math.Round(Curve.Linear(color.g, time, values)[0], 0);
-				usage += (int)Math.Round(Curve.Linear(color.b, time, values)[0], 0);
-				return usage;
-			}
-			else
-			{
-				return 0;
-			}
-		}
-		#endregion
-
 		public double GetAlpha(Voltage voltage)
 		{
 			#region Decrase recalculat count
@@ -103,7 +57,7 @@ namespace AmbientLight.Power
 
 			#region Local alpha
 			double localAlphaDivider = (powerlimits[(int)voltage] * maxusage * 0.9) * (1000 / minDeltaTimeBetweenRefresh) * 10;
-			double alpha1 = alphas[(int)voltage] + ((powerlimits[(int)voltage] * (maxusage*0.9)) - powerusages[(int)voltage]) / localAlphaDivider;
+			double alpha1 = alphas[(int)voltage] + ((powerlimits[(int)voltage] * (maxusage*0.9)) - PowerUsageManager.instance.GetPowerUsage(voltage)) / localAlphaDivider;
 			if (alpha1 > 1) { alpha1 = 1; }
 			else if (alpha1 < 0) { alpha1 = 0; }
 			#endregion
@@ -117,7 +71,7 @@ namespace AmbientLight.Power
 			}
 			else
 			{
-				alpha2 = alphas[0] + ((powerlimits[0] * (maxusage * 0.9)) - powerusages[0]) / globalAlphaDivider;
+				alpha2 = alphas[0] + ((powerlimits[0] * (maxusage * 0.9)) - PowerUsageManager.instance.GetPowerUsage(Voltage.None)) / globalAlphaDivider;
 			}
 			lasttime[0] = DateTimeOffset.Now.ToUnixTimeMilliseconds();
 			if (alpha2 > 1) { alpha2 = 1; }
@@ -180,7 +134,7 @@ namespace AmbientLight.Power
 					if (maxj != -1)
 					{
 						//TODO debug...
-						logger.Error("módosítom " + (byte)(255 * alphas[maxj]) + "\t" + ((Voltage)maxj).ToString() + "\t" + powerusages[0] + "\t" + powerusages[1] + "\t" + powerusages[2]);
+						logger.Error("módosítom " + (byte)(255 * alphas[maxj]) + "\t" + ((Voltage)maxj).ToString() + "\t" + PowerUsageManager.instance.GetPowerUsage(Voltage.None) + "\t" + PowerUsageManager.instance.GetPowerUsage(Voltage.V5) + "\t" + PowerUsageManager.instance.GetPowerUsage(Voltage.V12));
 						Arduino.instance.SetBrightness((byte)(255 * alphas[maxj]), (byte)i, (Voltage)maxj);
 					}
 				}

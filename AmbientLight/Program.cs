@@ -36,7 +36,7 @@ namespace AmbientLight
 			LED.SetLEDStripLength(5, 1);
 
 			#region Monitor
-			int monitorFPS = 60;
+			int monitorFPS = 20;
 			VirtualStrip monitorTop = new VirtualStrip(logger, Effects.SceenTopEffect, monitorFPS, ColorManager.GetColorManagerByID(ColorManagers.Empty), ColorManager.GetColorManagerByID(ColorManagers.Empty), new StripPart[]
 			{
 				new StripPart(3, 11, 0, Voltage.V12, LEDType.WS2811),
@@ -57,7 +57,7 @@ namespace AmbientLight
 
 			VirtualStrip monitorRight = new VirtualStrip(logger, Effects.SceenRightEffect, monitorFPS, ColorManager.GetColorManagerByID(ColorManagers.Empty), ColorManager.GetColorManagerByID(ColorManagers.Empty), new StripPart[]
 			{
-				new StripPart(3, 37, 30, Voltage.V12, LEDType.WS2811),
+				new StripPart(3, 37, 31, Voltage.V12, LEDType.WS2811),
 			});
 			//monitorBottom.effect.On();
 			#endregion
