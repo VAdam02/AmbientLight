@@ -41,7 +41,7 @@ namespace AmbientLight.Strip.LEDs
 		private bool changed;
 		private Voltage voltage;
 		private LEDType type;
-		private int powerusage;
+		public int powerusage = 0;
 
 		private LED(byte pin, byte id, Voltage voltage, LEDType type)
 		{
@@ -61,7 +61,6 @@ namespace AmbientLight.Strip.LEDs
 			changed = true;
 			this.voltage = voltage;
 			this.type = type;
-			powerusage = 0;
 
 			Arduino.instance.SendRGB(this);
 		}
@@ -138,10 +137,7 @@ namespace AmbientLight.Strip.LEDs
 
 		public void RefreshPower()
 		{
-			int last = powerusage;
 			powerusage = PowerUsageManager.instance.CalculateUsage(color, PowerManager.instance.GetAlpha(voltage), voltage, type);
-
-			PowerUsageManager.instance.RegisterChange(new PowerUsageChange() { voltage = voltage, deltaUsage = powerusage - last });
 		}
 
 		public override void Activate(BrightnessChangeEvent brightnessChangeEvent)

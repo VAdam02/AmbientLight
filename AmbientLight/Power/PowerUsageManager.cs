@@ -30,10 +30,8 @@ namespace AmbientLight.Power
 				powerusages[i] = 1;
 			}
 
-
-			queue = new List<PowerUsageChange>();
-			queueManager = new Thread(() => QueueManager(this));
-			StartQueue();
+			readManager = new Thread(() => ReadManager(this));
+			StartRead();
 		}
 
 		public int GetPowerUsage(Voltage voltage)
@@ -41,22 +39,39 @@ namespace AmbientLight.Power
 			return powerusages[(int)voltage];
 		}
 
-		#region Queue
-		private List<PowerUsageChange> queue;
-		public int GetQueueSize()
+		#region Reading
+		private Thread readManager;
+		private bool running = false;
+		public static void ReadManager(PowerUsageManager usageManager)
 		{
-			return queue.Count;
-		}
+			while (usageManager.running)
+			{
+				int[] new_powerusages = new int[LED.voltages.Length];
+				for (int i = 0; i < new_powerusages.Length; i++)
+				{
+					new_powerusages[i] = 0;
+				}
 
-		public void RegisterChange(PowerUsageChange change)
-		{
-			queue.Add(change);
-		}
+				for (int i = 0; i < LED.leds.Length; i++)
+				{
+					for (int j = 0; j < LED.leds[i].Length; j++)
+					{
+						try
+						{
+							new_powerusages[(int)LED.leds[i][j].GetVoltage()] += LED.leds[i][j].powerusage;
+						}
+						catch { }
+					}
+				}
 
-		private Thread queueManager;
-		private bool running;
-		public static void QueueManager(PowerUsageManager usageManager)
-		{
+				for (int i = 1; i < new_powerusages.Length; i++)
+				{
+					new_powerusages[0] += new_powerusages[i];
+				}
+
+				usageManager.powerusages = new_powerusages;
+			}
+			/*
 			int error = 0;
 			Logger logger = new Logger(usageManager.logger);
 			logger.AddLevel("Queue");
@@ -92,15 +107,16 @@ namespace AmbientLight.Power
 			}
 
 			logger.Debug(DebugCategory.Rare, "Queue stopped");
+			*/
 		}
 
-		private void StartQueue()
+		private void StartRead()
 		{
 			running = true;
-			queueManager.Start();
+			readManager.Start();
 		}
 
-		private void StopQueue()
+		private void StopRead()
 		{
 			running = false;
 		}
@@ -145,11 +161,5 @@ namespace AmbientLight.Power
 			}
 		}
 		#endregion
-	}
-
-	struct PowerUsageChange
-	{
-		public Voltage voltage;
-		public int deltaUsage;
 	}
 }

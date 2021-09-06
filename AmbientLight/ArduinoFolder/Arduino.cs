@@ -192,7 +192,6 @@ namespace AmbientLight
 						SerialPort testserial;
 						testserial = new SerialPort("COM" + portID) { BaudRate = 19200 };
 						testserial.Open();
-
 						success = CheckVersion(testserial);
 
 						if (success) { return testserial; }
